@@ -13,24 +13,23 @@ export class FeriadoService {
         let res = await axios.get(url)
         let data = res.data;
         return data.map((f)=>{
-            let irr = f.irrenunciable == 1 ? "Si": "No";
+            let irr = f.irrenunciable == '1' ? "Si": "No";
             return {nombre: f.nombre, fecha: f.fecha, irrenunciable: irr}
         });
     }
 
     async getFeriadoIrrenunciable():Promise<Feriado[]>{
         let url:string = this.configService.get<string>("ENDPOINT_FERIADOS")
-        let irren:[];
         let res = await axios.get(url)
         let data = res.data;
-        
+        //console.log(data);
+        let irren:Feriado[]=[]
         return data.map((f)=>{
             if(f.irrenunciable == '1'){
-                let irr = f.irrenunciable == '1' ? "Si": "No";
-                return {nombre: f.nombre, fecha: f.fecha, irrenunciable: irr}
-            }else{
-                return {};
+                let irr = f.irrenunciable == 1? 'Si': 'No';
+                irren.push({nombre: f.nombre, fecha: f.fecha, irrenunciable: irr})
             }
-        })
+            return irren;
+            })
     }
 }
