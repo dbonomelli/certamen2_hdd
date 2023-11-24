@@ -24,12 +24,11 @@ export class FeriadoService {
         let data = res.data;
         //console.log(data);
         let irren:Feriado[]=[]
-        return data.map((f)=>{
-            if(f.irrenunciable == '1'){
-                let irr = f.irrenunciable == 1? 'Si': 'No';
-                irren.push({nombre: f.nombre, fecha: f.fecha, irrenunciable: irr})
+        for(let i=0; i<data.length; i++){
+            if(data[i].irrenunciable == '1'){
+                irren.push({nombre: data[i].nombre, fecha: data[i].fecha, irrenunciable: 'Si'})
             }
-            return irren;
-            })
+        }
+        return irren
     }
 }
